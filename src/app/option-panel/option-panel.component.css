@@ -1,0 +1,14 @@
+#option-container {
+    display:flex;
+}
+.option-panel {
+    border-width:3px;
+    border-style: solid;
+    margin:5px;
+    max-width:40%;
+    float:left;
+}
+.selected {
+    border-color:blue;
+    background-color: aqua;
+}

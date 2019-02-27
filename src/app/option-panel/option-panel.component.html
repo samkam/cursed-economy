@@ -1,0 +1,20 @@
+<div id="option-container">
+    <div *ngFor="let option of currentOptions; let i = index" class="option-panel"
+        [class.selected]="selectedOption===option"(click)="onSelect(option)">
+        <h3>{{option.title | uppercase}}</h3>
+        <p>{{i}}</p>
+        <p>{{option.description}}</p>
+        <span>id: {{option.id}}</span>
+    </div>
+</div>
+<div *ngIf="selectedOption && currentRecord === undefined">
+<p>you chose {{selectedOption.title}}. submit?</p>
+<button (click)="this.submit()">submit</button>
+<p>options index: {{this.index}}</p>
+</div>
+<div *ngIf="currentRecord">
+    <p>voting record: </p>
+    <p>id:{{currentRecord.option1_id}}: {{currentRecord.option1_votes}}</p>
+    <p>id {{currentRecord.option2_id}}: {{currentRecord.option2_votes}}</p>
+    <button (click)="this.refreshOptions()">next</button>
+  </div>
