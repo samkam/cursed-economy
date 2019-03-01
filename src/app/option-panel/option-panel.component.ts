@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Option} from '../option';
 import {VoteRecord} from '../voterecord';
-import {VOTERECORDS} from '../mock-voterecords';
+import {VoterecordsService} from '../voterecords.service';
 import {OptionPanelService} from '../option-panel.service';
 //import { currentId } from 'async_hooks';
 
@@ -12,13 +12,15 @@ import {OptionPanelService} from '../option-panel.service';
 })
 export class OptionPanelComponent implements OnInit {
   toVisit: Option[];
-  Records: VoteRecord[] = VOTERECORDS;
+  Records: VoteRecord[];
   currentRecord: VoteRecord;
   currentOptions = [];
   selectedOption: Option;
   index: number=0;
-  constructor(private optionsService: OptionPanelService) { }
+  constructor(private optionsService: OptionPanelService,
+              private votesService: VoterecordsService) { }
   ngOnInit() { 
+    this.getVotes();
     this.getOptions();
     this.refetch();
   }
@@ -31,6 +33,9 @@ export class OptionPanelComponent implements OnInit {
   }
   getOptions(): void {
     this.optionsService.getOptions().subscribe(options => this.toVisit = options);
+  }
+  getVotes(): void {
+    this.votesService.getVoteRecords().subscribe(voterecords => this.Records = voterecords);
   }
   refetch(){
     this.toVisit = this.shuffle(this.toVisit);
