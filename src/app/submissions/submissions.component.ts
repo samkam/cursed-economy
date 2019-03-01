@@ -27,6 +27,7 @@ export class SubmissionsComponent implements OnInit {
     OPTIONS.push(out);
     this.clear();
     console.log(`added:${out.title}`);
+    window.alert(`successfully added ${titleIn} to deck`);
   }
   clear(){
     this.submission.id = null;

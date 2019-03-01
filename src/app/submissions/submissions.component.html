@@ -1,17 +1,17 @@
+<div>
 <p>
-  submit your own here!
-</p>
+  submit your own and have it shuffled in! note: won't persist after page refresh. back-end coming soon!</p>
 <label>
   title:
   <input [(ngModel)]="submission.title" placeholder="title">
 </label>
-<label>
+<label type="text">
   description:
-  <input [(ngModel)]="submission.description" placeholder="description">
+  <textarea [(ngModel)]="submission.description" placeholder="description"></textarea>
 </label>
 <div *ngIf="submission.description != undefined && submission.title != undefined">
 <button (click) ="this.submit(submission.description, submission.title)">
   submit
 </button>
 </div>
-<p>displaying: {{submission.description}}</p>
+</div>

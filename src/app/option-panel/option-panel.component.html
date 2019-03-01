@@ -2,7 +2,6 @@
     <div *ngFor="let option of currentOptions; let i = index" class="option-panel"
         [class.selected]="selectedOption===option"(click)="onSelect(option)">
         <h3>{{option.title | uppercase}}</h3>
-        <p>{{i}}</p>
         <p>{{option.description}}</p>
         <span>id: {{option.id}}</span>
     </div>
