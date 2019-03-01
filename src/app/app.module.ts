@@ -5,12 +5,14 @@ import {FormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
 import { OptionPanelComponent } from './option-panel/option-panel.component';
 import { SubmissionsComponent } from './submissions/submissions.component';
+import { MessageComponent } from './message/message.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     OptionPanelComponent,
-    SubmissionsComponent
+    SubmissionsComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Option} from '../option';
 import {VoteRecord} from '../voterecord';
-import {OPTIONS} from '../mock-options';
 import {VOTERECORDS} from '../mock-voterecords';
+import {OptionPanelService} from '../option-panel.service';
 //import { currentId } from 'async_hooks';
 
 @Component({
@@ -11,15 +11,32 @@ import {VOTERECORDS} from '../mock-voterecords';
   styleUrls: ['./option-panel.component.css']
 })
 export class OptionPanelComponent implements OnInit {
-  randIndex: number;// OPTIONS.length;
-  constructor() { }
-  toVisit = [];
+  toVisit: Option[];
   Records: VoteRecord[] = VOTERECORDS;
   currentRecord: VoteRecord;
   currentOptions = [];
   selectedOption: Option;
   index: number=0;
-  
+  constructor(private optionsService: OptionPanelService) { }
+  ngOnInit() { 
+    this.getOptions();
+    this.refetch();
+  }
+  shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+  getOptions(): void {
+    this.optionsService.getOptions().subscribe(options => this.toVisit = options);
+  }
+  refetch(){
+    this.toVisit = this.shuffle(this.toVisit);
+    this.currentOptions = [this.toVisit[0],this.toVisit[1]];
+    this.index =2; 
+  }
   refreshOptions(){
     if(this.index <this.toVisit.length-1){
       this.currentRecord = undefined;
@@ -30,21 +47,15 @@ export class OptionPanelComponent implements OnInit {
       this.index +=2;
     } 
     else{
-      window.alert("you have seen all the options. showing you again")
+      window.alert("You have seen all the options. Reshuffling.")
       this.refetch();
     }
   }
-  shuffle(a) {
-    for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-  }
+
   onSelect(option: Option): void{
     this.selectedOption = option;
   }
-  //
+
   submit(){
     let selected_id = this.selectedOption.id;
     let losing_id: number;
@@ -61,11 +72,10 @@ export class OptionPanelComponent implements OnInit {
     var id1_delta: number =1;
     var id2_delta: number = 0;
     if (selected_id > losing_id){
-      id1= losing_id;
-      id2= selected_id;
-      id1_delta =0;
-      id2_delta = 1;
-        
+      id1 = losing_id;
+      id2 = selected_id;
+      id1_delta = 0;
+      id2_delta = 1;        
     }
 
     for (let i =0; i<this.Records.length;i++){
@@ -86,20 +96,5 @@ export class OptionPanelComponent implements OnInit {
       console.log(`currentrecord: ${this.currentRecord}`);
       return;
   }
-  refetch(){
-    this.toVisit = this.shuffle(OPTIONS);
-    this.currentOptions = [this.toVisit[0],this.toVisit[1]];
-    this.index =2; 
 
-  }
-  ngOnInit() { 
-    this.refetch();
-  }
-  option: Option = {
-    id: 1,
-    title: "Hands and feet are switched",
-    description: "get ready for ankle gloves and wrist socks!",
-    timesChosen: 0,
-    timesPresented: 0
-  };
 }
