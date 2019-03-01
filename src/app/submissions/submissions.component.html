@@ -9,7 +9,7 @@
   description:
   <input [(ngModel)]="submission.description" placeholder="description">
 </label>
-<div *ngIf="submission.description != false && submission.title != false">
+<div *ngIf="submission.description != undefined && submission.title != undefined">
 <button (click) ="this.submit(submission.description, submission.title)">
   submit
 </button>
